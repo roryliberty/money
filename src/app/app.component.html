@@ -1,19 +1,37 @@
-<form style="width: 50%; margin: 0 auto">
+<form #dataForm="ngForm"
+      style="width: 50%; margin: 0 auto"
+      (ngSubmit)="onSubmit(dataForm.value)">
+
   <div class="form-group">
     <label class="col-form-label"
            for="coinbase">Coinbase</label>
+
     <input type="text"
            id="coinbase"
-           class="form-control">
-    <button class="btn btn-primary mt-2">Submit Coinbase</button>
+           class="form-control"
+           name="coinbase"
+           [(ngModel)]="form.coinBase">
   </div>
 
   <div class="form-group">
-    <label class="col-form-label" for="acorns">Acorns</label>
+<!--    <label class="col-form-label"
+           for="acorns">Acorns</label>
+
     <input type="text"
            id="acorns"
-           class="form-control">
-    <button class="btn btn-primary mt-2">Submit Acorns</button>
+           class="form-control"
+           name="acorns"
+           [(ngModel)]="form.acorns"> -->
+
+    <button class="btn btn-primary mt-2"
+            type="submit">Submit Data</button>
+
+    <button class="btn btn-secondary mt-2 mx-2"
+            type="reset" (click)="dataForm.reset()">Clear Form</button>
+
+    <button class="btn btn-danger mt-2"
+            type="button"
+            (click)="onGetData()">Get Data</button>
   </div>
 </form>
 
