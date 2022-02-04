@@ -1,5 +1,5 @@
 export interface DataModel {
-  coinBase: string;
-//  acorns: string;
+  coinbaseAmount: string;
+  acornsAmount: string;
   id?: string;
 }

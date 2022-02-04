@@ -10,21 +10,22 @@
            id="coinbase"
            class="form-control"
            name="coinbase"
+           required
            [(ngModel)]="form.coinBase">
   </div>
 
   <div class="form-group">
-<!--    <label class="col-form-label"
+    <label class="col-form-label"
            for="acorns">Acorns</label>
 
     <input type="text"
            id="acorns"
            class="form-control"
            name="acorns"
-           [(ngModel)]="form.acorns"> -->
+           [(ngModel)]="form.acorns">
 
     <button class="btn btn-primary mt-2"
-            type="submit">Submit Data</button>
+            type="submit" [disabled]="!dataForm.valid">Submit Data</button>
 
     <button class="btn btn-secondary mt-2 mx-2"
             type="reset" (click)="dataForm.reset()">Clear Form</button>
@@ -36,3 +37,11 @@
 </form>
 
 <hr>
+<div class="container">
+  <ul class="list-group">
+    <li class="list-group-item" *ngFor="let piece of data">
+      <p>{{ piece.id }}</p>
+      <p>{{ piece.acornsAmount }}</p>
+    </li>
+  </ul>
+</div>
