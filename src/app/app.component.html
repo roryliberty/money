@@ -4,30 +4,31 @@
 
   <div class="form-group">
     <label class="col-form-label"
-           for="coinbase">Coinbase</label>
+           for="first-name">First Name</label>
 
     <input type="text"
-           id="coinbase"
+           id="first-name"
            class="form-control"
-           name="coinbase"
-           [(ngModel)]="form.coinBase">
+           name="firstName"
+           [(ngModel)]="form.firstName">
   </div>
 
   <div class="form-group">
-<!--    <label class="col-form-label"
-           for="acorns">Acorns</label>
+    <label class="col-form-label"
+           for="last-name">Last Name</label>
 
     <input type="text"
-           id="acorns"
+           id="last-name"
            class="form-control"
-           name="acorns"
-           [(ngModel)]="form.acorns"> -->
+           name="lastName"
+           [(ngModel)]="form.lastName">
 
     <button class="btn btn-primary mt-2"
-            type="submit">Submit Data</button>
+            type="submit">Submit Person</button>
 
     <button class="btn btn-secondary mt-2 mx-2"
-            type="reset" (click)="dataForm.reset()">Clear Form</button>
+            type="reset"
+            (click)="dataForm.reset()">Clear Form</button>
 
     <button class="btn btn-danger mt-2"
             type="button"
@@ -36,3 +37,8 @@
 </form>
 
 <hr>
+
+<p *ngFor="let thing of people">
+  {{ thing.firstName }}
+  {{ thing.lastName }}
+</p>

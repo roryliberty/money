@@ -1,37 +1,42 @@
-import { Component, OnDestroy } from '@angular/core';
-import { HttpService } from "./http.service";
-import { DataModel } from "./data.model";
-import { Subscription } from "rxjs";
+import {Component, OnInit} from '@angular/core';
+import { PersonModel } from "./person.model";
+import {map} from "rxjs";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnDestroy {
+export class AppComponent implements OnInit {
+  public people: PersonModel[] = [];
+
   public form =  {
-    coinBase: '',
-    acorns: ''
-  }
-  public dataReceivedSubscription: Subscription = new Subscription();
-  public finalData: DataModel[] = [];
-
-  constructor(private httpService: HttpService) {
+    firstName: '',
+    lastName: ''
   }
 
-  ngOnDestroy() {
-    this.dataReceivedSubscription.unsubscribe();
+  constructor(private http: HttpClient) {
   }
 
-  onSubmit(data: DataModel) {
-    this.httpService.postData(data);
+  ngOnInit() {
+    this.onGetData();
+  }
+
+  onSubmit(data: PersonModel) {
+    this.http.post('https://money-81492-default-rtdb.firebaseio.com/coinbase.json', data).subscribe();
   }
 
   onGetData() {
-    this.httpService.getData()
-      .subscribe(stuff => {
-        console.log(stuff);
-        this.finalData = stuff;
-      });
+    this.http.get<{ [key: string]: PersonModel }>('https://money-81492-default-rtdb.firebaseio.com/coinbase.json')
+      .pipe(map(responseData => {
+          const dataArray: PersonModel[] = [];
+          Object.keys(responseData).forEach(key => dataArray.push({ ...responseData[key], id: key }));
+          return dataArray;
+        })
+      )
+      .subscribe(post => {
+      this.people = post;
+    });
   }
 }
