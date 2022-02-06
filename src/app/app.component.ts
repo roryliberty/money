@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import { PersonModel } from "./person.model";
 import {map} from "rxjs";
-import {HttpClient} from "@angular/common/http";
+import { HttpService } from "./http.service";
 
 @Component({
   selector: 'app-root',
@@ -10,13 +10,14 @@ import {HttpClient} from "@angular/common/http";
 })
 export class AppComponent implements OnInit {
   public people: PersonModel[] = [];
+  public idNumber: number = 0;
 
   public form =  {
     firstName: '',
     lastName: ''
   }
 
-  constructor(private http: HttpClient) {
+  constructor(private httpService: HttpService) {
   }
 
   ngOnInit() {
@@ -24,19 +25,14 @@ export class AppComponent implements OnInit {
   }
 
   onSubmit(data: PersonModel) {
-    this.http.post('https://money-81492-default-rtdb.firebaseio.com/coinbase.json', data).subscribe();
+    this.httpService.submitData(data);
+    this.form.firstName = '';
+    this.form.lastName = '';
   }
 
   onGetData() {
-    this.http.get<{ [key: string]: PersonModel }>('https://money-81492-default-rtdb.firebaseio.com/coinbase.json')
-      .pipe(map(responseData => {
-          const dataArray: PersonModel[] = [];
-          Object.keys(responseData).forEach(key => dataArray.push({ ...responseData[key], id: key }));
-          return dataArray;
-        })
-      )
-      .subscribe(post => {
-      this.people = post;
-    });
+    this.httpService.getData().subscribe(posts => {
+      this.people = posts;
+    })
   }
 }

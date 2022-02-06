@@ -10,6 +10,7 @@
            id="first-name"
            class="form-control"
            name="firstName"
+           required
            [(ngModel)]="form.firstName">
   </div>
 
@@ -21,10 +22,11 @@
            id="last-name"
            class="form-control"
            name="lastName"
+           required
            [(ngModel)]="form.lastName">
 
     <button class="btn btn-primary mt-2"
-            type="submit">Submit Person</button>
+            type="submit" [disabled]="!dataForm.valid">Submit Person</button>
 
     <button class="btn btn-secondary mt-2 mx-2"
             type="reset"
@@ -38,7 +40,10 @@
 
 <hr>
 
-<p *ngFor="let thing of people">
-  {{ thing.firstName }}
-  {{ thing.lastName }}
-</p>
+<div *ngFor="let thing of people">
+  <ul class="list-group">
+    <li class="list-group-item">
+      {{ thing.firstName }} {{ thing.lastName }}
+    </li>
+  </ul>
+</div>
