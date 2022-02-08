@@ -40,10 +40,16 @@
 
 <hr>
 
-<div *ngFor="let thing of people">
+<div>
   <ul class="list-group">
-    <li class="list-group-item">
-      {{ thing.firstName }} {{ thing.lastName }}
-    </li>
+    <!-- When you click on the person, show the person component -->
+    <a>
+      <li class="list-group-item"
+          style="cursor: pointer"
+          *ngFor="let thing of people; let i = index"
+          (click)="onSelectItem(i)">
+        {{ i + 1 }} {{ thing.firstName }} {{ thing.lastName }}
+      </li>
+    </a>
   </ul>
 </div>

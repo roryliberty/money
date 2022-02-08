@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import { PersonModel } from "./person.model";
-import {map} from "rxjs";
+import {map, Subject} from "rxjs";
 import { HttpService } from "./http.service";
 
 @Component({
@@ -9,7 +9,8 @@ import { HttpService } from "./http.service";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  public people: PersonModel[] = [];
+  public people: PersonModel[]  = [];
+  // Tells me which person is currently selected
   public idNumber: number = 0;
 
   public form =  {
@@ -22,6 +23,9 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.onGetData();
+    this.httpService.people.subscribe(array => {
+      this.people = array;
+    })
   }
 
   onSubmit(data: PersonModel) {
@@ -31,8 +35,10 @@ export class AppComponent implements OnInit {
   }
 
   onGetData() {
-    this.httpService.getData().subscribe(posts => {
-      this.people = posts;
-    })
+    this.httpService.getData();
+  }
+
+  onSelectItem(index: number) {
+
   }
 }
