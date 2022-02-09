@@ -1,0 +1,55 @@
+<form #dataForm="ngForm"
+      style="width: 50%; margin: 0 auto"
+      (ngSubmit)="onSubmit(dataForm.value)">
+
+  <div class="form-group">
+    <label class="col-form-label"
+           for="first-name">First Name</label>
+
+    <input type="text"
+           id="first-name"
+           class="form-control"
+           name="firstName"
+           required
+           [(ngModel)]="form.firstName">
+  </div>
+
+  <div class="form-group">
+    <label class="col-form-label"
+           for="last-name">Last Name</label>
+
+    <input type="text"
+           id="last-name"
+           class="form-control"
+           name="lastName"
+           required
+           [(ngModel)]="form.lastName">
+
+    <button class="btn btn-primary mt-2"
+            type="submit" [disabled]="!dataForm.valid">Submit Person</button>
+
+    <button class="btn btn-secondary mt-2 mx-2"
+            type="reset"
+            (click)="dataForm.reset()">Clear Form</button>
+
+    <button class="btn btn-danger mt-2"
+            type="button"
+            (click)="onGetData()">Get Data</button>
+  </div>
+</form>
+
+<hr>
+
+<div>
+  <ul class="list-group">
+    <!-- When you click on the person, show the person component -->
+    <a>
+      <li class="list-group-item"
+          style="cursor: pointer"
+          *ngFor="let thing of people; let i = index"
+          (click)="onSelectItem(i)">
+        {{ i + 1 }} {{ thing.firstName }} {{ thing.lastName }}
+      </li>
+    </a>
+  </ul>
+</div>

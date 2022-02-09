@@ -1,44 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import { PersonModel } from "./person.model";
-import {map, Subject} from "rxjs";
-import { HttpService } from "./http.service";
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
-  public people: PersonModel[]  = [];
-  // Tells me which person is currently selected
-  public idNumber: number = 0;
+export class AppComponent {
 
-  public form =  {
-    firstName: '',
-    lastName: ''
-  }
-
-  constructor(private httpService: HttpService) {
-  }
-
-  ngOnInit() {
-    this.onGetData();
-    this.httpService.people.subscribe(array => {
-      this.people = array;
-    })
-  }
-
-  onSubmit(data: PersonModel) {
-    this.httpService.submitData(data);
-    this.form.firstName = '';
-    this.form.lastName = '';
-  }
-
-  onGetData() {
-    this.httpService.getData();
-  }
-
-  onSelectItem(index: number) {
-
-  }
 }
